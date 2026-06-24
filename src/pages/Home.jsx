@@ -128,7 +128,7 @@ export default function PlanStoryTabs() {
                                 onClick={() => setActiveTab(story.id)}
                                 className={`flex-1 rounded-2xl px-2 py-3 text-center transition ${isActive
                                         ? "bg-lime-600 text-white shadow-lg"
-                                        : "bg-slate-50 text-slate-700 hover:bg-slate-100"
+                                        : "text-slate-700 hover:bg-slate-100"
                                     }`}
                             >
                                 <span className="block text-sm md:text-xl font-bold">
