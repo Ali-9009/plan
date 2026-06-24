@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
 
 const stories = [
     {
@@ -113,7 +118,7 @@ export default function PlanStoryTabs() {
                     <img src="/assets/logo.png" alt="" className="w-60" />
                 </div>
 
-                <div className="mb-8 grid gap-3 rounded-3xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-200/70 md:grid-cols-3">
+                <div className="mb-8 flex rounded-3xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-200/70">
                     {stories.map((story) => {
                         const isActive = activeTab === story.id;
 
@@ -121,14 +126,17 @@ export default function PlanStoryTabs() {
                             <button
                                 key={story.id}
                                 onClick={() => setActiveTab(story.id)}
-                                className={`rounded-2xl px-5 py-4 text-center transition ${isActive
+                                className={`flex-1 rounded-2xl px-2 py-3 text-center transition ${isActive
                                         ? "bg-lime-600 text-white shadow-lg"
                                         : "bg-slate-50 text-slate-700 hover:bg-slate-100"
                                     }`}
                             >
-                                <span className="block text-xl font-bold">{story.title}</span>
+                                <span className="block text-sm md:text-xl font-bold">
+                                    {story.title}
+                                </span>
+
                                 <span
-                                    className={`block text-sm font-semibold ${isActive ? "text-blue-200" : "text-slate-500"
+                                    className={`block text-[10px] md:text-sm font-semibold ${isActive ? "text-lime-100" : "text-slate-500"
                                         }`}
                                 >
                                     {story.subtitle}
@@ -138,7 +146,87 @@ export default function PlanStoryTabs() {
                     })}
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-3">
+                {/* Mobile */}
+                <div className="md:hidden">
+                    <Swiper
+                        // modules={[Pagination]}
+                        // pagination={{
+                        //     clickable: true,
+                        // }}
+                        spaceBetween={16}
+                        slidesPerView={1.1}
+                        centeredSlides={false}
+                        className="plans-swiper pt-10"
+                    >
+                        {activeStory.plans.map((plan) => (
+                            <SwiperSlide key={plan.sku}>
+                                <article
+                                    className={`relative flex h-full flex-col rounded-2xl border bg-white p-6 shadow-xl shadow-slate-200/60 ${plan.badge
+                                            ? "border-blue-300 ring-4 ring-blue-100"
+                                            : "border-slate-200"
+                                        }`}
+                                >
+                                    {plan.badge && (
+                                        <div className="absolute top-2 left-6 z-99 rounded-full bg-blue-600 px-4 py-1 text-xs font-bold text-white shadow-lg">
+                                            {plan.badge}
+                                        </div>
+                                    )}
+
+                                    <div className="mb-5 flex items-start justify-between gap-4 pt-2">
+                                        <div>
+                                            <p className="text-xs font-bold uppercase tracking-widest text-slate-400">
+                                                {plan.sku}
+                                            </p>
+
+                                            <h3 className="mt-1 text-2xl font-bold leading-tight">
+                                                {plan.name}
+                                            </h3>
+                                        </div>
+
+                                        <div className="shrink-0 text-right">
+                                            <p className="text-3xl font-bold text-blue-600">
+                                                {plan.price}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="mb-4 rounded-2xl bg-slate-50 p-4">
+                                        <p className="mb-2 text-sm font-bold text-slate-950">
+                                            Who it's for:
+                                        </p>
+
+                                        <p className="text-sm leading-6 text-slate-600">
+                                            {plan.who}
+                                        </p>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <div className="rounded-2xl border border-slate-200 p-4">
+                                            <p className="mb-1 text-sm font-bold">🇪🇸</p>
+                                            <p className="text-sm leading-6 text-slate-600">
+                                                {plan.es}
+                                            </p>
+                                        </div>
+
+                                        <div className="rounded-2xl border border-slate-200 p-4">
+                                            <p className="mb-1 text-sm font-bold">🇺🇸</p>
+                                            <p className="text-sm leading-6 text-slate-600">
+                                                {plan.us}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <button className="mt-auto rounded-xl bg-(--primary-color) px-4 py-2 text-md font-semibold text-white transition hover:bg-(--secondary-color)">
+                                        Choose this plan
+                                    </button>
+                                </article>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </div>
+
+                {/* Desktop */}
+                <div className="hidden gap-6 md:grid md:grid-cols-3">
                     {activeStory.plans.map((plan) => (
                         <article
                             key={plan.sku}
@@ -158,15 +246,14 @@ export default function PlanStoryTabs() {
                                     <p className="text-xs font-bold uppercase tracking-widest text-slate-400">
                                         {plan.sku}
                                     </p>
+
                                     <h3 className="mt-1 text-2xl font-bold leading-tight">
                                         {plan.name}
                                     </h3>
                                 </div>
 
                                 <div className="shrink-0 text-right">
-                                    <p className="text-3xl font-bold text-blue-600">
-                                        {plan.price}
-                                    </p>
+                                    <p className="text-3xl font-bold text-blue-600">{plan.price}</p>
                                 </div>
                             </div>
 
@@ -174,16 +261,17 @@ export default function PlanStoryTabs() {
                                 <p className="mb-2 text-sm font-bold text-slate-950">
                                     Who it's for:
                                 </p>
+
                                 <p className="text-sm leading-6 text-slate-600">{plan.who}</p>
                             </div>
 
                             <div className="space-y-3">
-                                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                                <div className="rounded-2xl border border-slate-200 p-4">
                                     <p className="mb-1 text-sm font-bold">🇪🇸</p>
                                     <p className="text-sm leading-6 text-slate-600">{plan.es}</p>
                                 </div>
 
-                                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                                <div className="rounded-2xl border border-slate-200 p-4">
                                     <p className="mb-1 text-sm font-bold">🇺🇸</p>
                                     <p className="text-sm leading-6 text-slate-600">{plan.us}</p>
                                 </div>

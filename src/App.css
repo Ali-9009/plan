@@ -31,6 +31,18 @@ body {
 }
 
 
+.plans-swiper .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    background: #cbd5e1;
+    opacity: 1;
+}
+
+.plans-swiper .swiper-pagination-bullet-active {
+    background: var(--primary-color);
+    width: 24px;
+    border-radius: 999px;
+}
 
 
 
