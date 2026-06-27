@@ -1,6 +1,6 @@
 import React from "react";
 // import Header from "../components/Header";
-import { Lock } from "lucide-react";
+import { AlertCircle, Lock, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Step_2() {
@@ -58,8 +58,9 @@ export default function Step_2() {
             </div>
 
             {/* Error Alert */}
-            <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-              Please fix the errors below to continue.
+            <div className="mb-6 flex items-center gap-3 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-red-700">
+              <AlertCircle size={18} />
+              <span>Please fix the errors below to continue.</span>
             </div>
 
             {/* Form Card */}
@@ -177,7 +178,7 @@ export default function Step_2() {
                 </div>
               </div>
               {/* Buttons */}
-              
+
               <div className="mt-8 flex md:flex-row flex-col gap-3 justify-between">
                 <Link
                   to="/"
